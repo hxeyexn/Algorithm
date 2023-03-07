@@ -16,12 +16,11 @@ public class Main {
 			M = M + 15; 
 			if (H != 0) {
 				H--;
-				System.out.println(H + " " + M);
 			}
 			else {
 				H = H + 23;
-				System.out.println(H + " " + M);
 			}
+			System.out.println(H + " " + M);
 			
 		}
 		else {
