@@ -1,11 +1,8 @@
 class Solution {
-        fun solution(n: Long): Long {
-        var answer: Long = 0
-        var num = n.toString()
-        var arr = num.toCharArray().sortedArrayDescending()
-        
-        answer = String(arr).toLong()
-
-        return answer
+    fun solution(n: Long): Long {
+        return String(n.toString()
+            .toCharArray()
+            .sortedArrayDescending()
+        ).toLong()
     }
 }
