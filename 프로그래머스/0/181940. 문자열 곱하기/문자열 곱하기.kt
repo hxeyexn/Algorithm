@@ -1,9 +1,3 @@
 class Solution {
-    fun solution(my_string: String, k: Int): String {
-        var answer = ""
-        repeat(k) {
-            answer = answer.plus(my_string)
-        }
-        return answer
-    }
+    fun solution(my_string: String, k: Int): String = my_string.repeat(k)
 }
