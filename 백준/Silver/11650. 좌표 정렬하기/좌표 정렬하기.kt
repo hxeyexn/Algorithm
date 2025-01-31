@@ -6,8 +6,7 @@ fun main() {
     
     val numbers = MutableList(br.readLine().toInt()) { br.readLine().split(" ") }
     
-    numbers.sortBy { it[1].toInt() }
-    numbers.sortBy { it[0].toInt() }
+    numbers.sortWith(compareBy({ it[0].toInt() }, { it[1].toInt() }))
     
     numbers.map {
         bw.write("${it.joinToString(" ")}\n")
