@@ -1,25 +1,35 @@
 fun main() {
-    val n = readln().toInt()
-    val a = readln().split(" ").map { it.toInt() }.sorted()
-    val mCount= readln().toInt()
-    val m = readln().split(" ").map { it.toInt() }
+    val br = System.`in`.bufferedReader()
+    val bw = System.out.bufferedWriter()
 
-    for (i in 0 until mCount) {
-        println(solve(n, i, a, m))
-    }
-}
+    val n = br.readLine().toInt()
+    val aNumbers = br.readLine().split(" ").map { it.toInt() }.toIntArray()
+    aNumbers.sort()
 
-fun solve(n: Int, i: Int, a: List<Int>, m: List<Int>): Int {
-    var start = 0
-    var end = n - 1
+    val m = br.readLine().toInt()
+    val numbers = br.readLine().split(" ").map { it.toInt() }
 
-    while (start <= end) {
-        var mid = (start + end) / 2
-        when {
-            m[i] < a[mid] -> end = mid - 1
-            m[i] > a[mid] -> start = mid + 1
-            else -> return 1
+    val result = Array(m) { 0 }
+
+    repeat (m) {
+        var start = 0
+        var end = n - 1
+
+        while (start <= end) {
+            val mid = (start + end) / 2
+
+            when {
+                numbers[it] == aNumbers[mid] -> {
+                    result[it] = 1
+                    break
+                }
+                numbers[it] > aNumbers[mid] -> start = mid + 1
+                numbers[it] < aNumbers[mid] -> end = mid - 1
+            }
         }
     }
-    return 0
+
+    result.forEach { bw.write("$it\n") }
+    bw.flush()
+    bw.close()
 }
