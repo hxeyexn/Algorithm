@@ -1,22 +1,30 @@
 fun main() {
-    val n = readln().toInt()
-    val graph = Array(n) { readln().split(" ").map { it.toInt() }.toIntArray() }
-    val result = Array(n) { Array(n) { 0 } }
-
-    fun dfs(v: Int, node: Int, visit: Array<Boolean>) {
-        for (next in 0 until n) {
-            if (graph[node][next] == 1 && !visit[next]) {
-                visit[next] = true
-                result[v][next] = 1
-                dfs(v, next, visit)
+    val br = System.`in`.bufferedReader()
+    val n = br.readLine().toInt()
+    val graph = Array(n) { br.readLine().split(" ").map { it.toInt() }.toIntArray() }
+    val result =  Array(n) { IntArray(n) { 0 } }
+    
+    fun dfs(v: Int, node: Int, visit: BooleanArray) {
+        visit[node] = true
+        result[v][node] = 1
+        
+        for (nextNode in 0 ..< n) {
+            if (graph[node][nextNode] == 1 && !visit[nextNode]) {
+                dfs(v, nextNode, visit)
             }
         }
     }
-
-    for (i in 0 until n) {
-        val visit = Array(n) { false }
-        dfs(i, i, visit)
+    
+    for (i in 0 ..< n) {
+        val visit = BooleanArray(n) { false }
+        for(j in 0 ..< n) {
+            if (graph[i][j] == 1) {
+                dfs(i, j, visit)
+            }
+        }
     }
     
-    result.map { println(it.joinToString(" ")) }
+    result.forEach {
+        println("${it.joinToString(" ")}")
+    }
 }
