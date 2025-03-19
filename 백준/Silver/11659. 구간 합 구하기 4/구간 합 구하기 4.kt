@@ -1,5 +1,6 @@
 fun main() {
     val br = System.`in`.bufferedReader()
+    val bw = System.out.bufferedWriter()
     val (n, m) = br.readLine().split(" ").map { it.toInt() }
     val numbers = br.readLine().split(" ").map { it.toInt() }
     val sum = IntArray(n + 1) { 0 }
@@ -10,7 +11,9 @@ fun main() {
     
     repeat(m) {
         val (i, j) = br.readLine().split(" ").map { it.toInt() }
-        val prefixSum = sum[j] - sum[i - 1]
-        println(prefixSum)
+        bw.write("${sum[j] - sum[i - 1]}\n")
     }
+    
+    bw.flush()
+    bw.close()
 }
