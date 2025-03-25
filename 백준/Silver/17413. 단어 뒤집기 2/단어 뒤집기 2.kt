@@ -1,43 +1,44 @@
 fun main() {
     val br = System.`in`.bufferedReader()
     val input = br.readLine()
-    val result = mutableListOf<String>()
+    val result = StringBuilder()
+    val current = StringBuilder()
     var isTag = false
-    var current = charArrayOf()
 
     for (char in input) {
         when (char) {
             '<' -> {
                 if (current.isNotEmpty()) {
                     current.reverse()
-                    result.add(current.joinToString(""))
-                    current = charArrayOf()
+                    result.append(current)
+                    current.clear()
                 }
                 isTag = true
-                current += char
+                current.append(char)
             }
             '>' -> {
                 isTag = false
-                current += char
-                result.add(current.joinToString(""))
-                current = charArrayOf()
+                current.append(char)
+                result.append(current)
+                current.clear()
             }
             ' ' -> {
                 if (!isTag) {
                     current.reverse()
-                    result.add("${current.joinToString("")} ")
-                    current = charArrayOf()
+                    result.append(current)
+                    result.append(' ')
+                    current.clear()
                 } else {
-                    current += ' '
+                    current.append(' ')
                 }
             }
             else -> {
-                current += char
+                current.append(char)
             }
         }
     }
 
     current.reverse()
-    result.add(current.joinToString(""))
-    result.forEach { print(it) }
+    result.append(current)
+    print(result)
 }
