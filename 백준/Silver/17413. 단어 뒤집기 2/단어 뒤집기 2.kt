@@ -2,7 +2,7 @@ fun main() {
     val br = System.`in`.bufferedReader()
     val input = br.readLine()
     val result = mutableListOf<String>()
-    var tagMode = false
+    var isTag = false
     var current = charArrayOf()
 
     for (char in input) {
@@ -13,18 +13,19 @@ fun main() {
                     result.add(current.joinToString(""))
                     current = charArrayOf()
                 }
-                tagMode = true
+                isTag = true
                 current += char
             }
             '>' -> {
-                tagMode = false
+                isTag = false
                 current += char
                 result.add(current.joinToString(""))
                 current = charArrayOf()
             }
             ' ' -> {
-                if (!tagMode) {
-                    result.add("${current.reversed().joinToString("")} ")
+                if (!isTag) {
+                    current.reverse()
+                    result.add("${current.joinToString("")} ")
                     current = charArrayOf()
                 } else {
                     current += ' '
