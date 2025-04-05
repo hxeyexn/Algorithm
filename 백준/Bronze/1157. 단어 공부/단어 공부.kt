@@ -1,22 +1,20 @@
 fun main() {
     val br = System.`in`.bufferedReader()
     val input = br.readLine().uppercase()
-    val alphabet = mutableMapOf<Char, Int>()
-    
-    for (key in 'A'..'Z') {
-        alphabet[key] = 0
-    }
-    
+    val alphabet = Array(26) { 0 }
+    val ACode = 'A'.code
+
     for (key in input) {
-        alphabet[key] = alphabet[key]?.plus(1) ?: 0
+        val idx = key.code - ACode
+        alphabet[idx]++
     }
-    
-    val max = alphabet.values.max()
-    val count = alphabet.values.count { it == max }
-    
+
+    val max = alphabet.max()
+    val count = alphabet.count { it == max }
+
     if (count == 1) {
-        val result = alphabet.filterValues { it == max }.keys
-        print(result.first())
+        val result = alphabet.indexOf(max) + ACode
+        print(result.toChar())
     } else {
         print("?")
     }
