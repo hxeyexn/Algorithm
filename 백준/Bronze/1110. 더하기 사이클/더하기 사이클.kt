@@ -4,8 +4,8 @@ fun main() {
     var newNum = N
 
     while (true) {
-        val sum = String.format("%02d", newNum.sumOf { it.digitToInt() })
-        newNum = "${newNum.last()}${sum.last()}"
+        val sum = newNum.sumOf { it.digitToInt() }
+        newNum = "${newNum.last()}${sum % 10}"
         count++
         if (N == newNum) break
     }
