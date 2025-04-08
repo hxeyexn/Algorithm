@@ -2,42 +2,26 @@ fun main() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
     val input = br.readLine()
-    
-    
-    val uppercase = CharArray(26) { ' ' }
-    val lowercase = CharArray(26) { ' ' }
-    
-    for (upper in 'A' .. 'Z') {
-        val idx = upper - 'A'
-        uppercase[idx] = upper
-    }
-    
-    for (lower in 'a' .. 'z') {
-        val idx = lower - 'a'
-        lowercase[idx] = lower
-    }
-    
+
     for (char in input) {
-        var idx = 0
-        
         when {
             char.isUpperCase() -> {
-                idx = char - 'A'
+                var char = char
             
                 repeat(13) {
-                    if (idx == 25) idx = 0
-                    else idx++
+                    if (char == 'Z') char = 'A'
+                    else char += 1
                 }
-                bw.write("${uppercase[idx]}")
+                bw.write("$char")
             } 
             char.isLowerCase() -> {
-                idx = char - 'a'
+                var char = char
             
                 repeat(13) {
-                    if (idx == 25) idx = 0
-                    else idx++
+                    if (char == 'z') char = 'a'
+                    else char += 1
                 }
-                bw.write("${lowercase[idx]}")
+                bw.write("$char")
             }
             else -> {
                 bw.write("$char")
