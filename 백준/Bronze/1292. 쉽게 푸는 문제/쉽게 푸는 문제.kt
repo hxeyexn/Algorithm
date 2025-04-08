@@ -1,17 +1,17 @@
 fun main() {
     val (A, B) = readln().split(" ").map { it.toInt() }
-    val array = IntArray(B + 1) { 0 }
+    val array = arrayListOf<Int>()
+    var sum = 0
     
-    var idx = 1
-    var currentNum = 1
-    
-    while (idx <= B) {
-        for (num in 1 .. currentNum) {
-            if (idx > B) break
-            array[idx++] = currentNum
+    for (i in 1 .. B) {
+        for (j in 1 .. i) {
+            array.add(i)
         }
-        currentNum++
+    }
+
+    for (i in A - 1 ..< B) {
+        sum += array[i]
     }
     
-    print(array.slice(A .. B).sum())
+    print(sum)
 }
