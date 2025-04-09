@@ -7,22 +7,14 @@ fun main() {
         val N = br.readLine().toInt()
         val X = br.readLine().split(" ").map { it.toInt() }
         
-        // 누적 합
-        val prefixSum = IntArray(N + 1) { 0 }
-        for (i in 1 .. N) {
-            prefixSum[i] = prefixSum[i - 1] + X[i - 1]
-        }
-        
         // maximum subarray 구하기
-        var max = Int.MIN_VALUE
+        var max = X[0]
+        var current = X[0]
         
-        for (start in 0 .. N) {
-            for (end in start + 1 .. N) {
-                val sum = prefixSum[end] - prefixSum[start]
-                if (max < sum) max = sum
-            }
+        for (i in 1 ..< N) {
+            current = maxOf(X[i], current + X[i])
+            max = maxOf(max, current)
         }
-        
         bw.write("$max\n")
     }
     
