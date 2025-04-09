@@ -1,55 +1,62 @@
+import java.io.BufferedWriter
 import java.util.Queue
 import java.util.LinkedList
 
 fun main() {
     val br = System.`in`.bufferedReader()
-    val (n, m, v) = br.readLine().split(" ").map { it.toInt() }
-
-    val array = Array(n + 1) { mutableListOf<Int>() }
-
-    repeat(m) {
-        val (x, y) = br.readLine().split(" ").map { it.toInt() }
-        // 입력으로 주어지는 간선은 양방향
-        array[x].add(y)
-        array[y].add(x)
+    val bw = System.out.bufferedWriter()
+    
+    val (N, M, V) = br.readLine().split(" ").map { it.toInt() }
+    val graph = Array(N + 1) { mutableListOf<Int>() }
+    
+    // 간선은 양방향
+    repeat(M) {
+        val (a, b) = br.readLine().split(" ").map { it.toInt() }
+        graph[a].add(b)
+        graph[b].add(a)
     }
-
+    
     // 방문할 수 있는 정점이 여러 개인 경우에는 정점 번호가 작은 것을 먼저 방문
-    array.forEach { it.sort() }
-
-    val visit = BooleanArray(n + 1) { false }
-    dfs(v, array, visit)
-    bfs(v, array)
-    return
+    graph.forEach { it.sort() }
+    
+    // dfs
+    val dfsVisited = BooleanArray(N + 1) { false }
+    dfs(bw, V, dfsVisited, graph)
+    bw.write("\n")
+    
+    // bfs
+    val bfsVisited = BooleanArray(N + 1) { false }
+    bfs(bw, V, bfsVisited, graph)
+    
+    bw.flush()
+    bw.close()
 }
 
-fun dfs(v: Int, array: Array<MutableList<Int>>, visit: BooleanArray) {
-    visit[v] = true
-    print("$v ")
-
-    for (nextV in array[v]) {
-        if (!visit[nextV]) dfs(nextV, array, visit)
+fun dfs(bw: BufferedWriter, v: Int, visited: BooleanArray, graph: Array<MutableList<Int>>) {
+    if (visited[v]) return
+    bw.write("$v ")
+    visited[v] = true
+    
+    for (newV in graph[v]) {
+        if (!visited[newV]) dfs(bw, newV, visited, graph)
     }
 }
 
-fun bfs(v: Int, array: Array<MutableList<Int>>) {
-    val result = mutableListOf<Int>()
-    val visit = BooleanArray(array.size + 1) { false }
+fun bfs(bw: BufferedWriter, v: Int, visited: BooleanArray, graph: Array<MutableList<Int>>) {
+    if (visited[v]) return
+    
     val queue: Queue<Int> = LinkedList()
     queue.add(v)
-    visit[v] = true
-
-    while (queue.isNotEmpty()) {
-        val newV = queue.poll()
-        result.add(newV)
-
-        for (nextV in array[newV]) {
-            if (!visit[nextV]) {
-                queue.add(nextV)
-                visit[nextV] = true
-            }
+    visited[v] = true
+    
+    while(queue.isNotEmpty()) {
+        val currentV = queue.poll()
+        bw.write("$currentV ")
+        
+        for (newV in graph[currentV]) {
+            if (visited[newV]) continue
+            queue.add(newV)
+            visited[newV] = true
         }
     }
-
-    println("\n${result.joinToString(" ")}")
 }
