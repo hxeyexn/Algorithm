@@ -1,0 +1,8 @@
+-- 코드를 입력하세요
+SELECT 
+    BOARD_ID,
+    WRITER_ID,
+    TITLE,
+    PRICE,
+    STATUS
+FROM USED_GOODS_BOARD;
