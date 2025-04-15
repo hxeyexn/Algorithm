@@ -22,7 +22,7 @@ fun main() {
             schools[name] = consumption.toInt()
         }
         
-        val schoolName = schools.filter { it.value == schools.values.max() }.keys.first()
+        val schoolName = schools.entries.first { it.value == schools.values.max() }.key
         bw.write("$schoolName\n")
     }
     
