@@ -1,21 +1,18 @@
 fun main() {
     val (N, K) = readln().split(" ").map { it.toInt() }
-    val numbers = (2 .. N).toMutableList()
+    val isRemoved = BooleanArray(N + 1) { false }
     var count = 0
 
-    while (numbers.isNotEmpty()) {
-        val P = numbers.first()
-        val iterator = numbers.iterator()
-
-        while (iterator.hasNext()) {
-            val num = iterator.next()
-            
-            if (num % P == 0) {
-                iterator.remove()
+    for (i in 2 .. N) {
+        if (isRemoved[i]) continue
+        
+        for (j in i .. N step i) {
+            if (!isRemoved[j]) {
+                isRemoved[j] = true
                 count++
-
+                
                 if (count == K) {
-                    print(num)
+                    print(j)
                     return
                 }
             }
