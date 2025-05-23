@@ -16,10 +16,8 @@ fun main() {
 
             if (count == K) {
                 print(element)
-                break
+                return
             }
         }
-
-        if (count == K) break
     }
 }
