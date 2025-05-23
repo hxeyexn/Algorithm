@@ -4,7 +4,7 @@ fun main() {
     var count = 0
 
     while (numbers.isNotEmpty()) {
-        val P = numbers.min()
+        val P = numbers.first()
         val iterator = numbers.iterator()
 
         while (iterator.hasNext()) {
