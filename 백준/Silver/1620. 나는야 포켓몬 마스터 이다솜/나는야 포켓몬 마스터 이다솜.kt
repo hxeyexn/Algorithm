@@ -18,9 +18,11 @@ fun main() {
         val input = br.readLine()
         
         if (input.toIntOrNull() == null) {
-            bw.write("${names[input]}\n")
+            bw.write("${names[input]}")
+            bw.newLine()
         } else {
-            bw.write("${numbers[input.toInt() - 1]}\n")
+            bw.write("${numbers[input.toInt() - 1]}")
+            bw.newLine()
         }
     }
 
