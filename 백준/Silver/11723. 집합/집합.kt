@@ -26,10 +26,10 @@ fun main() {
                 }
             }
             "all" -> {
-                S.removeAll(S)
+                S.clear()
                 S.addAll(1..20)
             }
-            "empty" -> S.removeAll(S)
+            "empty" -> S.clear()
         } 
     }
     
