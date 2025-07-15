@@ -7,20 +7,22 @@ fun main() {
     
     repeat(M) {
         val input = br.readLine().split(" ")
+        val operation = input[0]
+        val x = input.getOrNull(1)?.toInt() ?: 0
         
-        when(input[0]) {
-            "add" -> S.add(input[1].toInt())
-            "remove" -> S.remove(input[1].toInt())
+        when(operation) {
+            "add" -> S.add(x)
+            "remove" -> S.remove(x)
             "check" -> {
-                if (S.contains(input[1].toInt())) bw.write("1") 
+                if (S.contains(x)) bw.write("1") 
                 else bw.write("0")
                 bw.newLine()
             }
             "toggle" -> {
-                if (S.contains(input[1].toInt())) {
-                    S.remove(input[1].toInt()) 
+                if (S.contains(x)) {
+                    S.remove(x) 
                 } else {
-                    S.add(input[1].toInt())
+                    S.add(x)
                 }
             }
             "all" -> {
