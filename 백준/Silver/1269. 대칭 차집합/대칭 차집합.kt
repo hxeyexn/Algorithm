@@ -9,8 +9,15 @@ fun main() {
     val A = br.readLine().split(" ").toSet()
     val B = br.readLine().split(" ").toSet()
     
-    val newA = A.subtract(B)
-    val newB = B.subtract(A)
+    var count = 0
     
-    print("${newA.size + newB.size}")
+    for (x in A) {
+        if (!B.contains(x)) count++
+    }
+    
+    for (x in B) {
+        if (!A.contains(x)) count++
+    }
+    
+    print("${count}")
 }
