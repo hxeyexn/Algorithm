@@ -12,6 +12,5 @@ fun main() {
     val newA = A.subtract(B)
     val newB = B.subtract(A)
     
-    val newSet = newA + newB
-    print("${newSet.size}")
+    print("${newA.size + newB.size}")
 }
