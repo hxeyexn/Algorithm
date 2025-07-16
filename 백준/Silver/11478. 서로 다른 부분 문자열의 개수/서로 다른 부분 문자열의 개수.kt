@@ -2,7 +2,7 @@ fun main() {
     val br = System.`in`.bufferedReader()
     val S = br.readLine()
 
-    val set = mutableSetOf<String>()
+    val set = hashSetOf<String>()
     
     for (i in S.length downTo 1) {
         var start = 0
