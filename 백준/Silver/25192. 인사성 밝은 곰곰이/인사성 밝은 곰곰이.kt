@@ -8,10 +8,8 @@ fun main() {
         val input = br.readLine()
         
         if (input == "ENTER") {
-            if (it != 0) {
-                count += gomgom.size
-                gomgom.clear()
-            } 
+            count += gomgom.size
+            gomgom.clear()
         } else {
             gomgom.add(input)
         }
