@@ -1,3 +1,5 @@
+import java.util.*
+
 fun main() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
@@ -7,18 +9,18 @@ fun main() {
     
     repeat(T) {
         val N = br.readLine().toInt()
-        val note1 = mutableMapOf<Int, Boolean>()
-        val tempNote1 = br.readLine().split(" ").map { it.toInt() }
+        val set = HashSet<Int>()
+        val note1 = StringTokenizer(br.readLine())
         
-        for (x in tempNote1) {
-            note1[x] = true
+        repeat(N) {
+            set.add(note1.nextToken().toInt())
         }
-        
+
         val M = br.readLine().toInt()
-        val note2 = br.readLine().split(" ").map { it.toInt() }
+        val note2 = StringTokenizer(br.readLine())
         
-        for (x in note2) {
-            val result = if (note1.containsKey(x)) 1 else 0
+        repeat(M) {
+            val result = if (set.contains(note2.nextToken().toInt())) 1 else 0
             bw.write("$result")
             bw.newLine()
         }
