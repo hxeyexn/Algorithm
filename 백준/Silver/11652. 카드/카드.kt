@@ -10,5 +10,5 @@ fun main() {
     
     val max = cards.values.max()
     val result = cards.filter { it.value == max }.toSortedMap()
-    print("${result.firstKey()}")
+    print("${result.keys.first()}")
 }
