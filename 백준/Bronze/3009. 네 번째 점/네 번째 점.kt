@@ -1,9 +1,10 @@
 fun main() {
+    val br = System.`in`.bufferedReader()
     val xList = mutableListOf<Int>()
     val yList = mutableListOf<Int>()
     
     repeat(3) {
-        val (x, y) = readln().split(" ").map { it.toInt() }
+        val (x, y) = br.readLine().split(" ").map { it.toInt() }
         xList.add(x)
         yList.add(y)
     }
