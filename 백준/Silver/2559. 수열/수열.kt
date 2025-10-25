@@ -1,23 +1,21 @@
 fun main() {
     val br = System.`in`.bufferedReader()
     val (N, K) = br.readLine().split(" ").map { it.toInt() }
-    val temperature = br.readLine().split(" ").map { it.toLong() }
-    val prefixSum = LongArray(N + 1) { 0 }
+    val temp = br.readLine().split(" ").map { it.toInt() }
     
-    // 1. 누적합 만들기
-    for (i in 1 .. N) {
-        prefixSum[i] = prefixSum[i - 1] + temperature[i - 1]
-    }
-    
-    var start = 0
+    var start = 1
     var end = K
-    var max = Long.MIN_VALUE
+    var prefixSum = (0 until K).sumOf { temp[it] }
+    var max = prefixSum
     
-    // 2. 구간합 계산 후 max 변경
-    do {
-        val newSum = prefixSum[end++] - prefixSum[start++]
-        if (max < newSum) max = newSum
-    } while (end <= N)
+    while (end < N) {
+        val sum = prefixSum - temp[start - 1] + temp[end]
+        prefixSum = sum
+        
+        if (max < sum) max = sum
+        start++
+        end++
+    }
     
     print(max)
 }
