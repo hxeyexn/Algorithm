@@ -4,7 +4,7 @@ fun main() {
     val (N, M) = readln().split(" ").map { it.toInt() }
     val bw = System.out.bufferedWriter()
     val progression = mutableListOf<Int>()
-    backtracking(N, M, count = 0, progression, bw)
+    backtracking(N, M, progression, bw)
     
     bw.flush()
     bw.close()
@@ -13,7 +13,6 @@ fun main() {
 fun backtracking(
     n: Int, 
     m: Int,
-    count: Int,
     progression: MutableList<Int>,
     bw: BufferedWriter,
 ) {
@@ -27,7 +26,7 @@ fun backtracking(
     
     for (i in 1 .. n) {
         progression.add(i)
-        backtracking(n, m, count + 1, progression, bw)
+        backtracking(n, m, progression, bw)
         progression.removeLast()
     }
 }
