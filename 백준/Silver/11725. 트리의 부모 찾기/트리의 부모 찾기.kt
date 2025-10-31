@@ -4,14 +4,14 @@ fun main() {
     val sb = StringBuilder()
     
     val N = br.readLine().toInt()
-    val tree = mutableMapOf<Int, MutableList<Int>>()
+    val tree = Array(N + 1) { ArrayList<Int>() }
     val visited = BooleanArray(N + 1) { false }
     val result = IntArray(N + 1) { 0 }
     
     repeat(N - 1) {
         val (a, b) = br.readLine().split(" ").map { it.toInt() }
-        tree.getOrPut(a) { mutableListOf() }.add(b)
-        tree.getOrPut(b) { mutableListOf() }.add(a)
+        tree[a].add(b)
+        tree[b].add(a)
     }
     
     dfs(1, visited, tree, result)
@@ -29,7 +29,7 @@ fun main() {
 fun dfs(
     v: Int, 
     visited: BooleanArray, 
-    tree: MutableMap<Int, MutableList<Int>>,
+    tree: Array<ArrayList<Int>>,
     result: IntArray,
 ) {
     if (visited[v]) return
