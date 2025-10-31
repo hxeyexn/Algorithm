@@ -1,3 +1,5 @@
+import java.util.StringTokenizer
+
 val br = System.`in`.bufferedReader()
 val sb = StringBuilder()
 
@@ -8,7 +10,10 @@ val rightTree = mutableMapOf<String, String>()
 
 fun main() {
     repeat(N) {
-        val (node, left, right) = br.readLine().split(" ")
+        val st = StringTokenizer(br.readLine())
+        val node = st.nextToken()
+        val left = st.nextToken()
+        val right = st.nextToken()
         
         leftTree[node] = left
         rightTree[node] = right
