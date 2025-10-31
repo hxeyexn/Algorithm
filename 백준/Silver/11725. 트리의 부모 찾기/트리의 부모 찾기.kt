@@ -35,7 +35,7 @@ fun dfs(
     if (visited[v]) return
     visited[v] = true
     
-    tree[v]?.forEach { newV ->
+    for (newV in tree[v]) {
         if (!visited[newV]) {
             result[newV] = v
             dfs(newV, visited, tree, result)
