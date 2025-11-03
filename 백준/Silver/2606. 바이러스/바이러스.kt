@@ -1,31 +1,35 @@
+import java.util.LinkedList
+
 fun main() {
     val br = System.`in`.bufferedReader()
-
-    val computerCount = br.readLine().toInt()
-    val pairCount = br.readLine().toInt()
-    val network = Array(computerCount + 1) { mutableListOf<Int>() }
-    val visited = BooleanArray(computerCount + 1) { false }
-
-    repeat(pairCount) {
-        val (a, b) = br.readLine().split(" ").map { it.toInt() }
-        network[a].add(b)
-        network[b].add(a)
-    }
-
-    // 시작 정점 1
-    print(dfs(1, visited, network) - 1)
-}
-
-fun dfs(v: Int, visited: BooleanArray, network: Array<MutableList<Int>>): Int {
+    val nodeCount = br.readLine().toInt()
+    val edgeCount = br.readLine().toInt()
+    val graph = Array(nodeCount + 1) { ArrayList<Int>() }
+    val visited = BooleanArray(nodeCount + 1) { false }
     var count = 0
     
-    if (visited[v]) return 0
-    visited[v] = true
-    count++
-    
-    for (newV in network[v]) {
-        if (!visited[newV]) count += dfs(newV, visited, network)
+    repeat(edgeCount) {
+        val (a, b) = br.readLine().split(" ").map { it.toInt() }
+        
+        graph[a].add(b)
+        graph[b].add(a)
     }
     
-    return count
+    val queue = LinkedList<Int>()
+    queue.add(1)
+    visited[1] = true
+    
+    while (queue.isNotEmpty()) {
+        val node = queue.remove()
+        count++
+        
+        for (newNode in graph[node]) {
+            if (visited[newNode]) continue
+            
+            queue.add(newNode)
+            visited[newNode] = true
+        }
+    }
+    
+    print(count - 1)
 }
