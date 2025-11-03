@@ -15,21 +15,23 @@ fun main() {
         graph[b].add(a)
     }
     
-    val queue = LinkedList<Int>()
-    queue.add(1)
-    visited[1] = true
-    
-    while (queue.isNotEmpty()) {
-        val node = queue.remove()
-        count++
-        
+    fun dfs(
+        node: Int,
+        graph: Array<ArrayList<Int>>,
+        visited: BooleanArray,
+    ) {
+        if (visited[node]) return
+        visited[node] = true
+
         for (newNode in graph[node]) {
             if (visited[newNode]) continue
-            
-            queue.add(newNode)
-            visited[newNode] = true
+
+            dfs(newNode, graph, visited)
+            count++
         }
     }
     
-    print(count - 1)
+    dfs(node = 1, graph, visited)
+    
+    print(count)
 }
