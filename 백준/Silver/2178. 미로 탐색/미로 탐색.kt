@@ -1,38 +1,41 @@
-import java.util.*
+import java.util.LinkedList
 
 fun main() {
-    val (n, m) = readln().split(" ").map { it.toInt() }
-    val miro = Array(n) { readln().map { it.digitToInt() }.toIntArray() }
-
-    val dx = listOf(1, 0, -1, 0)
-    val dy = listOf(0, 1, 0, -1)
-
-    val dist = Array(n) { Array(m) { 0 } }
-    var count = 0
-
-    for (i in 0 ..< n) {
-        for (j in 0 ..< m) {
-            if (dist[i][j] != 0 || miro[i][j] == 0) continue
-            dist[i][j] = ++count
-
-            val queue: Queue<Pair<Int, Int>> = LinkedList()
-            queue.add(i to j)
-
-            while (!queue.isEmpty()) {
-                val current = queue.remove()
-
-                for (k in 0..3) {
-                    val nx = current.first + dx[k]
-                    val ny = current.second + dy[k]
-
-                    if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue
-                    if (dist[nx][ny] != 0 || miro[nx][ny] == 0) continue
-                    queue.add(nx to ny)
-                    dist[nx][ny] = dist[current.first][current.second] + 1
-                }
-            }
+    val br = System.`in`.bufferedReader()
+    val (N, M) = br.readLine().split(" ").map { it.toInt() }
+    val miro = Array(N + 1) { IntArray(M + 1) { 0 } }
+    
+    for (i in 1 .. N) {
+        val input = br.readLine()
+        
+        for (j in 1 .. M) {
+            miro[i][j] = input[j - 1].digitToInt()
         }
     }
-
-    print("${dist[n - 1][m - 1]}")
+    
+    val visited = Array(N + 1) { BooleanArray(M + 1) { false } }
+    val queue = LinkedList<Pair<Int, Int>>()
+    val dx = intArrayOf(1, 0, -1, 0)
+    val dy = intArrayOf(0, 1, 0, -1)
+    
+    queue.add(1 to 1)
+    visited[1][1] = true
+    
+    while(!queue.isEmpty()) {
+        val (curX, curY) = queue.remove()
+        
+        for (i in 0 .. 3) {
+            val newX = curX + dx[i]
+            val newY = curY + dy[i]
+            
+            if (newX <= 0 || newX > N || newY <= 0 || newY > M) continue
+            if (visited[newX][newY] || miro[newX][newY] == 0) continue
+            
+            miro[newX][newY] = miro[curX][curY] + 1
+            queue.add(newX to newY)
+            visited[newX][newY] = true
+        }
+    }
+    
+    print("${miro[N][M]}")
 }
