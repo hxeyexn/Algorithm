@@ -1,43 +1,48 @@
-import java.util.*
+import java.util.LinkedList
 
 fun main() {
     val br = System.`in`.bufferedReader()
     val T = br.readLine().toInt()
-    val dx = listOf(1, 0, -1, 0)
-    val dy = listOf(0, 1, 0, -1)
     
+    val dx = intArrayOf(1, 0, -1, 0)
+    val dy = intArrayOf(0, 1, 0, -1)
+
     repeat(T) {
         val (M, N, K) = br.readLine().split(" ").map { it.toInt() }
-    
-        val field = Array(M) { BooleanArray(N) { false } }
-        val visit = Array(M) { BooleanArray(N) { false } }
+        
+        val field = Array(M) { IntArray(N) { 0 } }
+        val visited = Array(M) { BooleanArray(N) { false } }
         var count = 0
         
         repeat(K) {
-            val (X, Y) = br.readLine().split(" ").map { it.toInt() }
-            field[X][Y] = true
+            val (x, y) = br.readLine().split(" ").map { it.toInt() }
+            field[x][y] = 1 
         }
-    
-        for (m in 0 ..< M) {
-            for (n in 0 ..< N) {
-                if (!field[m][n] || visit[m][n]) continue
+
+        for (m in 0 until M) {
+            for (n in 0 until N) {
+                // 방문한 적이 있으면 continue
+                if (visited[m][n] || field[m][n] == 0) continue
                 
-                val queue: Queue<Pair<Int, Int>> = LinkedList()
+                // 방문한 적이 없으면 queue에 추가, 방문 처리
+                val queue = LinkedList<Pair<Int, Int>>()
+                
                 queue.add(m to n)
-                visit[m][n] = true
+                visited[m][n] = true
                 count++
-                
+
                 while (queue.isNotEmpty()) {
-                    val (currentX, currentY) =  queue.poll()
+                    val (currentX, currentY) = queue.poll()
                     
                     for (i in 0 .. 3) {
                         val nx = currentX + dx[i]
                         val ny = currentY + dy[i]
                         
                         if (nx < 0 || nx >= M || ny < 0 || ny >= N) continue
-                        if (!field[nx][ny] || visit[nx][ny]) continue
+                        if (visited[nx][ny] || field[nx][ny] == 0) continue
+                        
                         queue.add(nx to ny)
-                        visit[nx][ny] = true
+                        visited[nx][ny] = true
                     }
                 }
             }
