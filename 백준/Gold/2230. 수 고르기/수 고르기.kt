@@ -1,4 +1,3 @@
-import kotlin.math.abs
 import kotlin.math.min
 
 fun main() {
@@ -18,7 +17,7 @@ fun main() {
             continue
         }
         
-        val sub = abs(progression[start] - progression[end])
+        val sub = progression[end] - progression[start]
         
         if (sub < M) end++
         else {
