@@ -1,44 +1,47 @@
+import java.util.StringTokenizer
+
 fun main() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
-    val sb = StringBuilder()
-    
     val N = br.readLine().toInt()
+    
     val tree = Array(N + 1) { ArrayList<Int>() }
     val visited = BooleanArray(N + 1) { false }
-    val result = IntArray(N + 1) { 0 }
+    val parents = IntArray(N + 1) { 0 }
     
     repeat(N - 1) {
-        val (a, b) = br.readLine().split(" ").map { it.toInt() }
+        val input = StringTokenizer(br.readLine())
+        val a = input.nextToken().toInt()
+        val b = input.nextToken().toInt()
+        
         tree[a].add(b)
         tree[b].add(a)
     }
     
-    dfs(1, visited, tree, result)
+    dfs(node = 1, visited, tree, parents)
     
-    for (i in 2 until result.size) {
-        sb.append("${result[i]}")
-        sb.append("\n")
+    for (i in 2 .. N) {
+        bw.write("${parents[i]}")
+        bw.newLine()
     }
     
-    bw.write(sb.toString())
     bw.flush()
     bw.close()
 }
 
 fun dfs(
-    v: Int, 
-    visited: BooleanArray, 
+    node: Int,
+    visited: BooleanArray,
     tree: Array<ArrayList<Int>>,
-    result: IntArray,
+    parents: IntArray,
 ) {
-    if (visited[v]) return
-    visited[v] = true
+    if (visited[node]) return
+    visited[node] = true
     
-    for (newV in tree[v]) {
-        if (!visited[newV]) {
-            result[newV] = v
-            dfs(newV, visited, tree, result)
-        }
+    for (newNode in tree[node]) {
+        if (visited[newNode]) continue
+        
+        parents[newNode] = node
+        dfs(newNode, visited, tree, parents)
     }
 }
