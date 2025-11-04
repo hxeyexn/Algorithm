@@ -1,33 +1,40 @@
+import java.util.StringTokenizer
+
 fun main() {
     val br = System.`in`.bufferedReader()
-    
     val n = br.readLine().toInt()
-    val progression = br.readLine().split(" ").map { it.toInt() }.toMutableList()
-    progression.sort()
+    val progression = IntArray(n) { 0 }
+    
+    val input = StringTokenizer(br.readLine())
+    repeat(n) {
+        progression[it] = input.nextToken().toInt()
+    }
     
     val x = br.readLine().toInt()
-
+    
+    // 수열 정렬
+    progression.sort()
+    
     var start = 0
     var end = n - 1
     var count = 0
     
+    // 합이 x보다 크다면 end를 1 줄임
+    // 합이 x보다 작다면 start를 1 키움
+    // 합이 x와 동일하면 start를 1 키우고 end를 1 줄임
     while (start < end) {
         val sum = progression[start] + progression[end]
         
         when {
             sum > x -> end--
-            // start, end 모두 이동 시키는 이유
-            // 정렬되어있기 때문에 
-            // start만 올리면 x보다 무조건 큼
-            // end만 줄이면 x보다 무조건 작음
-            sum == x -> {
+            sum < x -> start++
+            else -> {
+                count++
                 start++
                 end--
-                count++
             }
-            else -> start++
         }
     }
     
-    print(count)
+    print("$count")
 }
