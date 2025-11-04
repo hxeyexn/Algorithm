@@ -4,17 +4,12 @@ import kotlin.math.max
 fun main() {
     val br = System.`in`.bufferedReader()
     val (N, K) = br.readLine().split(" ").map { it.toInt() }
-    val progression = IntArray(N) { 0 }
-    var maxSum = 0
-    var currentSum = 0
     
     val input = StringTokenizer(br.readLine())
-    repeat(N) {
-        progression[it] = input.nextToken().toInt()
-        
-        if (it < K) currentSum += progression[it]
-    }
-    maxSum = currentSum
+    val progression = IntArray(N) { input.nextToken().toInt() }
+    
+    var currentSum = (0 until K).sumOf { progression[it] }
+    var maxSum = currentSum
     
     var start = 1
     var end = K
