@@ -1,18 +1,23 @@
+import java.util.StringTokenizer
+
 fun main() {
+    val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
     val sb = StringBuilder()
     
-    val (N, M) = readln().split(" ").map { it.toInt() }
-    val numbers = readln().split(" ").map { it.toInt() }.toMutableList()
+    val (N, M) = br.readLine().split(" ").map { it.toInt() }
+
+    val input = StringTokenizer(br.readLine())
+    val numbers = IntArray(N) { input.nextToken().toInt() }
     numbers.sort()
     
-    val progression = mutableListOf<Int>()
-    val result = mutableSetOf<List<Int>>()
+    val result = mutableSetOf<List<Int>>()   
+    val progression = ArrayList<Int>() 
     
-    backtracking(N, M, numbers, progression, result)
+    backtracking(N, M, numbers, result, progression)
     
-    for (r in result) {
-        sb.append(r.joinToString(" "))
+    result.forEach {
+        sb.append(it.joinToString(" "))
         sb.append("\n")
     }
     
@@ -21,13 +26,12 @@ fun main() {
     bw.close()
 }
 
-// 같은 수를 여러번 고를 수 있지만 수열은 중복되면 안됨
 fun backtracking(
     n: Int,
     m: Int,
-    numbers: MutableList<Int>,
-    progression: MutableList<Int>,
+    numbers: IntArray,
     result: MutableSet<List<Int>>,
+    progression: ArrayList<Int>,
 ) {
     if (progression.size == m) {
         result.add(progression.toList())
@@ -36,7 +40,7 @@ fun backtracking(
     
     for (i in 0 until n) {
         progression.add(numbers[i])
-        backtracking(n, m, numbers, progression, result)
+        backtracking(n, m, numbers, result, progression)
         progression.removeLast()
     }
 }
