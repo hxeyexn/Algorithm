@@ -1,22 +1,21 @@
+import java.util.StringTokenizer
+
 fun main() {
     val br = System.`in`.bufferedReader()
-    
-    // N을 읽는다.
     val N = br.readLine().toInt()
     
-    // 현재 성적을 읽은 후 split 한다
-    val scores = br.readLine().split(" ").map { it.toDouble() }
-    val max = scores.max()
+    val input = StringTokenizer(br.readLine())
+    val scores = DoubleArray(N) { input.nextToken().toDouble() }
     
-    // 새로운 성적의 합
-    var sum = 0.0
+    // 자기 점수 중에 최댓값
+    val M = scores.max()
     
-    // 새로운 성적을 구한다.
-    for (score in scores) {
-        sum += score / max * 100
+    repeat(N) {
+        scores[it] = scores[it] / M * 100
     }
     
-    // 새로운 평균을 구한다.
-    print(sum / N)
+    val newAverage = scores.sumOf { it } / N
+    
+    print(newAverage)
+    
 }
-
