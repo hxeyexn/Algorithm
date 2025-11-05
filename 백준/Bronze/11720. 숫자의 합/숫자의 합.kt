@@ -1,11 +1,8 @@
 fun main() {
-    val count = readln().toInt()
-    val number = readln()
-    var answer = 0
+    val br = System.`in`.bufferedReader()
+    val N = br.readLine().toInt()
+    val numbers = br.readLine().map { it.digitToInt() }
     
-    repeat(count) {
-        answer += number[it].digitToInt()
-    }
-    
-    println(answer)
+    val sum = numbers.sumOf { it }
+    print(sum)
 }
