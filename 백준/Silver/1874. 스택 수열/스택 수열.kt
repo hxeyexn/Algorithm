@@ -4,52 +4,34 @@ import java.util.Stack
 fun main() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
+    val sb = StringBuilder()
     val n = br.readLine().toInt()
     
-    val progression = LinkedList<Int>()
-    repeat(n) {
-        progression.add(br.readLine().toInt())
-    }
-    
-    var result = ArrayList<Char>()
-    var latestNum = 0
+    val numbers = IntArray(n) { br.readLine().toInt() }    
     val stack = Stack<Int>()
+    
+    var latestNum = 1
+    var isPossible = true
     
     // 가장 최근에 나온 수보다 progression이 크면 그만큼 + 출력 후 -출력 한번, i 변경
     // 가장 최근에 나온 수보다 작으면 - 한번 출력, i 변경
-    while (progression.isNotEmpty()) {
-        val currentNum = progression.removeFirst()
-        
-        if (latestNum < currentNum) {
-            for (i in latestNum + 1 .. currentNum) {
-                stack.push(i)
-                result.add('+')
-            } 
-            
-            latestNum = currentNum
-            stack.pop()
-            result.add('-')
-        } else {
-            val remove = stack.peek()
-            
-            if (currentNum != remove) {
-                result.clear()
-                break
-            }
-            
-            stack.pop()
-            result.add('-')
+    for (number in numbers) {
+        while (latestNum <= number) {
+            stack.push(latestNum++)
+            sb.appendLine('+')
         }
+        
+        if (number != stack.peek()) {
+            isPossible = false
+            break
+        }
+        
+        stack.pop()
+        sb.appendLine('-')
     }
     
-    if (result.isNotEmpty()) {
-        for (r in result) {
-            bw.write("$r")
-            bw.newLine()
-        }
-    } else {
-        bw.write("NO")
-    }
+    if (isPossible) bw.write(sb.toString())
+    else bw.write("NO")
     
     bw.flush()
     bw.close()
