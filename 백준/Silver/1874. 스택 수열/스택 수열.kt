@@ -3,7 +3,6 @@ import java.util.Stack
 
 fun main() {
     val br = System.`in`.bufferedReader()
-    val bw = System.out.bufferedWriter()
     val sb = StringBuilder()
     val n = br.readLine().toInt()
     
@@ -30,9 +29,6 @@ fun main() {
         sb.appendLine('-')
     }
     
-    if (isPossible) bw.write(sb.toString())
-    else bw.write("NO")
-    
-    bw.flush()
-    bw.close()
+    if (isPossible) print(sb)
+    else print("NO")
 }
