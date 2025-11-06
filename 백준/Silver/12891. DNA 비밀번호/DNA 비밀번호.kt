@@ -7,32 +7,22 @@ fun main() {
     val condition = mutableMapOf('A' to input[0], 'C' to input[1], 'G' to input[2], 'T' to input[3])
     val latestCondition = mutableMapOf('A' to 0, 'C' to 0, 'G' to 0, 'T' to 0)
 
-
-    (0 until P).forEach {
-        val char = dna[it]
+    for (idx in 0 until P) {
+        val char = dna[idx]
         latestCondition[char] = latestCondition.getValue(char) + 1
     }
 
-    var start = 0
-    var end = P - 1
     var count = 0
 
-    while (true) {
-        val isValidCount =
-            latestCondition.getValue('A') >= condition.getValue('A')
-                    && latestCondition.getValue('C') >= condition.getValue('C')
-                    && latestCondition.getValue('G') >= condition.getValue('G')
-                    && latestCondition.getValue('T') >= condition.getValue('T')
-
-        if (isValidCount) count++
-
-        latestCondition[dna[start]] = latestCondition.getValue(dna[start]) - 1
-        start++
-
-        if (end == S - 1) break
+    for (end in P .. S) {
+        val isValid = latestCondition.all { (k, v) -> v >= condition.getValue(k) }
+        if (isValid) count++
+        if (end == S) break
         
-        val newChar = dna[++end]
-        latestCondition[newChar] = latestCondition.getValue(newChar) + 1
+        val endDna = dna[end]
+        val startDna = dna[end - P]
+        latestCondition[endDna] = latestCondition.getValue(endDna) + 1
+        latestCondition[startDna] = latestCondition.getValue(startDna) - 1
     }
 
     print(count)
