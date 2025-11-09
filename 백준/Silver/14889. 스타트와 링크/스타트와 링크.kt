@@ -11,18 +11,18 @@ fun main() {
     // N / 2명으로 이루어진 스타트 팀과 링크 팀으로 사람들을 나눠야 함
     val visited = BooleanArray(N) { false }
     
-    backtracking(index = 0, visited)
-    
+    backtracking(index = 0, depth = 0, visited)
     print(min)
 }
 
 fun backtracking(
     index: Int,
+    depth: Int,
     visited: BooleanArray,
 ) {
-    val startCount = visited.count { it == true }
+    if (min == 0) return
     
-    if (startCount == N / 2) {
+    if (depth == N / 2) {
         var startScore = 0
         var linkScore = 0
         
@@ -39,7 +39,6 @@ fun backtracking(
         
         val sub = abs(startScore - linkScore)
         min = min(min, sub)
-        if (min == 0) return
         
         return
     }
@@ -48,7 +47,7 @@ fun backtracking(
         if (visited[i]) continue
         
         visited[i] = true
-        backtracking(i + 1, visited)
+        backtracking(index = i + 1, depth = depth + 1, visited)
         visited[i] = false
     }
 }
