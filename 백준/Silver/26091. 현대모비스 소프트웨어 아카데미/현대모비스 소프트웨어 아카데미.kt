@@ -1,9 +1,13 @@
+import java.util.StringTokenizer
+
 fun main() {
     val br = System.`in`.bufferedReader()
     
     // 견학을 희망하는 학회원의 수 N과 견학하는 팀의 최소 능력치 M
     val (N, M)  = br.readLine().split(" ").map { it.toInt() }
-    val talent = br.readLine().split(" ").map { it.toInt() }.toIntArray()
+    
+    val input = StringTokenizer(br.readLine())
+    val talent = IntArray(N) { input.nextToken().toInt() }
     talent.sort()
     
     var start = 0
